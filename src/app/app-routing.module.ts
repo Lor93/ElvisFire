@@ -1,5 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { canActivate, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+
+//Send any unathorized User back to the Login Screen
+const redirectUnathorizedToLogin = () => redirectUnauthorizedTo(['/']);
+
+//Automatiucally Log in the users
+const redirectLoggedInToChat = () => redirectLoggedInTo(['/']);
 
 const routes: Routes = [
   {
@@ -8,8 +15,18 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
+    ...canActivate(redirectLoggedInToChat),
+
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'chat',
+    ...canActivate(redirectUnathorizedToLogin),
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
   },
 ];
 

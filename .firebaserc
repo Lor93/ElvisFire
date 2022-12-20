@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "elvis-apps-b290f": {
+      "hosting": {
+        "app": [
+          "elvis-apps-b290f"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "elvis-apps-b290f"
+  }
+}
